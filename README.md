@@ -1,0 +1,2 @@
+# capn-log
+configurable log
