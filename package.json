@@ -1,7 +1,7 @@
 {
-  "name": "rocket-log",
-  "version": "2.0.0",
-  "description": "configurable log",
+  "name": "capn-log",
+  "version": "2.0.2",
+  "description": "Finely configurable log with one-touch redactions",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/capnajax/capn-log.git"
+    "url": "git+https://github.com/rocketcode-dev/rocket-log.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/capnajax/capn-log/issues"
+    "url": "https://github.com/rocketcode-dev/rocket-log/issues"
   },
-  "homepage": "https://github.com/capnajax/capn-log#readme",
+  "homepage": "https://github.com/rocketcode-dev/rocket-log#readme",
   "dependencies": {},
   "devDependencies": {
     "mocha": "^10.2.0",

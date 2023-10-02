@@ -1,4 +1,4 @@
-# RocketLog: the official RocketCode Logger
+# Cap'n Log: the official RocketCode Logger
 
 Flexible and externally-configurable and redactable logging engine with these great features:
 
