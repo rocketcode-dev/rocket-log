@@ -1,35 +1,17 @@
 'use strict';
 
+import levels from './levels.js';
+import { FAULT, ERROR, WARN, INFO, VERBOSE, DEBUG, TRACE } from './levels.js';
 import stringify from 'fast-safe-stringify';
 import winston from 'winston';
 import _ from 'lodash';
 
+/**
+ * @module logger
+ *  @deprecated
+ */
+ 
 const MODULE = 'capn-log';
-
-const logLevels = {
-  fatal: 0,
-  error: 1,
-  warn: 2,
-  info: 3,
-  debug: 4, 
-  trace: 5
-};
-
-const FATAL='fatal';
-const ERROR='error';
-const WARN='warn';
-const INFO='info';
-const DEBUG='debug';
-const TRACE='trace';
-
-const colors = {
-  fatal: '\x1b[1;101;97m[FATAL ]\x1b[m',
-  error:  '\x1b[1;41;97m[ERROR ]\x1b[m',
-  warn:  '\x1b[1;104;97m[ warn ]\x1b[m',
-  info:        '\x1b[92m[  info]\x1b[m',
-  debug:       '\x1b[94m[   dbg]\x1b[m',
-  trace:               '[    tr]'
-};
 
 let loggers = {};
 
@@ -54,14 +36,19 @@ function setConfigs(newConfigs) {
   loggers = {};
 }
 
-function getLevel(module, method) {
-
+function getLevel(module, method, path) {
   let level;
   let moduleLevel = _.find(c('debug.logging.modules'), {name:module});
   if (!_.isNil(moduleLevel)) {
     if (_.has(moduleLevel, 'methods')) {
       let moduleMethod = _.find(moduleLevel.methods, {name: method});
-      moduleMethod && (level = moduleMethod.level);
+      if (path && moduleMethod && _.has(moduleMethod, 'paths')) {
+        let moduleMethodPath = _.find(moduleMethod.paths, {name: path});
+        moduleMethodPath && (level = moduleMethodPath.level);
+      }
+      if (_.isNil(level)) {
+        moduleMethod && (level = moduleMethod.level);
+      }
     }
     if (_.isNil(level)) {
       level = moduleLevel.level;
@@ -70,14 +57,13 @@ function getLevel(module, method) {
   if (_.isNil(level)) {
     level = c('debug.logging.level');
   }
-  if (_.isNil(level) || !_.has(logLevels, level)) {
+  if (_.isNil(level) || !_.has(levels, level)) {
     level = INFO;
   }
   return level;
 }
 
 function getShowSensitive(module, method) {
-
   let showSensitive = undefined;
   let moduleLevel = _.find(c('debug.logging.modules'), {name:module});
   if (!_.isNil(moduleLevel)) {
@@ -112,10 +98,10 @@ const moduleFormat = winston.format((info, opts) => {
   
   // calculate log level for the module/method
   // TODO we can speed this up by precalculating the log levels.
-  let level = getLevel(module, method);
+  let level = getLevel(module, method, path);
   let showSensitive = getShowSensitive(module, method);
 
-  if (logLevels[info.level] > logLevels[level]) {
+  if (levels[info.level] > levels[level]) {
     return false;
   }
 
@@ -144,7 +130,7 @@ const lineFormat = winston.format.printf(
     let { level, message, timestamp, module, showSensitive } = logMessage;
     let metadata = _.omit(
       logMessage, ['level', 'message', 'timestamp', 'module', 'showSensitive']);
-    let msg = `${timestamp} ${colors[level]} ${module}: ${message}`;
+    let msg = `${timestamp} ${module}: ${message}`;
     if(metadata && _.size(metadata)) {
       let objString = objTypeByHeuristics(metadata);
       let detailString;
@@ -169,7 +155,7 @@ function createLogger(module, method, path) {
       moduleFormat({module, method, path}),
       lineFormat
     ),
-    levels: logLevels,
+    levels,
     transports: [
       // keep this at trace -- we've filtered out the logs we don't need
       // earlier
@@ -285,22 +271,22 @@ function getLogger(module, method, path) {
     return loggers[key];
   } else {
     let newLogger = createLogger(module, method, path);
-    (log || newLogger).debug('Creating logger %s %s:%s%s',
-        colors[getLevel(module, method)],
+    (log || newLogger).debug('Creating logger %s:%s%s',
         module, method, path ? ` path ${path}` : '');
     loggers[key] = newLogger;
     return newLogger;
   }
 }
 
-export default {
-  FATAL,
+export default getLogger;
+export {
+  FAULT,
   ERROR,
   WARN,
   INFO,
+  VERBOSE,
   DEBUG,
   TRACE,
   getLogger,
-  logLevels,
   setConfigs
 };

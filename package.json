@@ -1,11 +1,15 @@
 {
   "name": "capn-log",
-  "version": "0.9.0",
+  "version": "2.0.0",
   "description": "configurable log",
-  "main": "logger.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "visual-test": "node test/visual/test.js",
+    "mocha-test": "node_modules/mocha/bin/mocha.js test/mocha",
+    "mocha-testc": "node_modules/mocha/bin/mocha.js -c test/mocha",
+    "test": "npm run visual-test && npm run mocha-test",
+    "testc": "npm run visual-test && npm run mocha-testc"
   },
   "repository": {
     "type": "git",
@@ -21,5 +25,10 @@
     "fast-safe-stringify": "^2.1.1",
     "lodash": "^4.17.21",
     "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "test-battery": "^0.3.0",
+    "yaml": "^2.3.2"
   }
 }
