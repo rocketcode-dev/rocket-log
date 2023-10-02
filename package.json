@@ -1,8 +1,8 @@
 {
-  "name": "capn-log",
+  "name": "rocket-log",
   "version": "2.0.0",
   "description": "configurable log",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "visual-test": "node test/visual/test.js",
@@ -21,14 +21,9 @@
     "url": "https://github.com/capnajax/capn-log/issues"
   },
   "homepage": "https://github.com/capnajax/capn-log#readme",
-  "dependencies": {
-    "fast-safe-stringify": "^2.1.1",
-    "lodash": "^4.17.21",
-    "winston": "^3.3.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": "^10.2.0",
-    "test-battery": "^0.3.0",
-    "yaml": "^2.3.2"
+    "test-battery": "^0.3.0"
   }
 }

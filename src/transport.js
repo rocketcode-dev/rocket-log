@@ -2,11 +2,9 @@
 
 import * as levels from './levels.js';
 import { Writable } from 'node:stream';
-import * as tokenizer from './src/tokenizer.js';
+import * as tokenizer from './tokenizer.js';
 import { getTransports } from './index.js';
-import _ from 'lodash';
-
-const isNil = _.isNil;
+import { isNil } from './tools.js';
 
 const TYPE_CONSOLE = 'console';
 const TYPE_FILE = 'file';

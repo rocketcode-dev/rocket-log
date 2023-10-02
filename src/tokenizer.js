@@ -1,6 +1,6 @@
 'use strict';
 
-import { inspect } from 'util';
+import { inspect } from 'node:util';
 
 const REDACT_ALL = 'redact-all';
 const REDACT_START = 'redact-start';

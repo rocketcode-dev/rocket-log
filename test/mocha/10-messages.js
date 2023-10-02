@@ -1,7 +1,7 @@
 'use strict';
 
 import TestBattery from 'test-battery';
-import logger from '../../index.js';
+import logger from '../../src/index.js';
 
 const config = {
   debug: {

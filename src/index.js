@@ -305,7 +305,7 @@ class MMPHash {
   }
 }
 
-function getLogger(module, method, path) {
+function logger(module, method, path) {
   return loggerManager.getLogger(module, method, path);
 }
 
@@ -314,13 +314,13 @@ function getTransports() {
 }
 
 const loggerManager = new LoggerManager();
-Object.defineProperty(getLogger, 'config', {
+Object.defineProperty(logger, 'config', {
   set: function (newConfig) {
     loggerManager.config = newConfig;    
   }
 });
 
-export default getLogger;
+export default logger;
 export {
-  getLogger, getTransports
+  logger, getTransports
 }
