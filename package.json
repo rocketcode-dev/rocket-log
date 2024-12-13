@@ -1,6 +1,6 @@
 {
   "name": "capn-log",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Finely configurable log with one-touch redactions",
   "main": "src/index.js",
   "type": "module",
@@ -8,6 +8,7 @@
     "visual-test": "node test/visual/test.js",
     "mocha-test": "node_modules/mocha/bin/mocha.js test/mocha",
     "mocha-testc": "node_modules/mocha/bin/mocha.js -c test/mocha",
+    "blinkers": "node_modules/blinkers/bin/blinkers.js",
     "test": "npm run visual-test && npm run mocha-test",
     "testc": "npm run visual-test && npm run mocha-testc"
   },
@@ -21,8 +22,8 @@
     "url": "https://github.com/rocketcode-dev/rocket-log/issues"
   },
   "homepage": "https://github.com/rocketcode-dev/rocket-log#readme",
-  "dependencies": {},
   "devDependencies": {
+    "blinkers": "^0.1.0",
     "mocha": "^10.2.0",
     "test-battery": "^0.3.0"
   }

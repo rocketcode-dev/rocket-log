@@ -9,6 +9,12 @@
       "name": "Visual Test",
       "request": "launch",
       "type": "node-terminal"
+    },
+    {
+      "command": "npm run mocha-test",
+      "name": "Mocha Test",
+      "request": "launch",
+      "type": "node-terminal"
     }
   ]
 }

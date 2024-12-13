@@ -3,7 +3,6 @@
 import { validLevel } from "./levels.js";
 
 const validHttpMethods = [
-  // FIXME this is not a complete list
   'DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT'
 ];
 
@@ -17,7 +16,7 @@ const DEFAULTS = Symbol('DEFAULTS');
  *     level: <name>
  *     transport: <name> (optional, default is 'default')
  *   transports: (optional, default, called `default` logs ansi to console)
- *     - 
+ *     -
  *   modules: (optional, default is empty. Modules not specified use defaults)
  *     - name: <module name>
  *       level: <level>
@@ -28,17 +27,22 @@ const DEFAULTS = Symbol('DEFAULTS');
  *         paths: (optional, default is all paths)
  *         - level: <level>
  *           transport: <transport>
- * @param {*} manager 
+ * @param {*} manager
  */
 function validateConfig(manager) {
   const errors = [];
 
-  errors.push(...validateConfigItem(
-    manager,
-    '[defaults]',
-    manager.config.defaults,
-    DEFAULTS
-  ));
+  if (Object.hasOwn(manager.config, 'defaults')) {
+    errors.push(...validateConfigItem(
+      manager,
+      '[defaults]',
+      manager.config.defaults,
+      DEFAULTS
+    ));
+  } else {
+    errors.push('Config must have a defaults section');
+  }
+
 
   if (Object.hasOwn(manager.config, 'modules')) {
     if (Array.isArray(manager.config.modules)) {
@@ -53,7 +57,7 @@ function validateConfig(manager) {
     } else {
       errors.push('Config modules must be an array');
     }
-  } 
+  }
   return errors.length ? errors : null;
 }
 
@@ -89,7 +93,7 @@ function validateConfigItem(manager, name, item, subitemTypes) {
       }
     }
   }
-  
+
   if (subitemTypes !== DEFAULTS) {
     if (!item.name) {
       errors.push(`${name} name not set`);

@@ -94,7 +94,7 @@ class LoggerManager {
   /**
    * @method getMmpProperty
    * Gets a property from the config, using the module/method/path hierarchy.
-   * If a property is not defined for a module/method/math, it'll check the 
+   * If a property is not defined for a module/method/math, it'll check the
    * module/method, then the module, then the default config.
    * @param {string} property the name of the property to get.
    * @param {MMPHash} mmpHash the hash value for the module/method/path,
@@ -136,7 +136,9 @@ class LoggerManager {
         }
       }
     }
-    if (result === undefined && Object.hasOwn(this.#config.defaults, property)) {
+    if (result === undefined &&
+      Object.hasOwn(this.#config.defaults, property)
+    ) {
       result = this.#config.defaults[property];
     }
 
@@ -224,7 +226,7 @@ class MMPHash {
    *  such an object.
    * @param {string} [method] the name of the method. This can be a JavaScript
    *  method or an HTTP verb. Conventionally, HTTP verbs should be uppercase and
-   *  JavaScript methods should start with a lowercase letter. 
+   *  JavaScript methods should start with a lowercase letter.
    * @param {string} [path] the name of the path. This is typically only used
    *  when the method is an HTTP verb.
    */
@@ -247,7 +249,7 @@ class MMPHash {
     if (path) {
       if (!(method && module)) {
         throw new Error('Path requires method and module');
-      }  
+      }
       if (typeof path !== 'string') {
         throw new Error('Path must be a string');
       }
@@ -316,7 +318,7 @@ function getTransports() {
 const loggerManager = new LoggerManager();
 Object.defineProperty(logger, 'config', {
   set: function (newConfig) {
-    loggerManager.config = newConfig;    
+    loggerManager.config = newConfig;
   }
 });
 

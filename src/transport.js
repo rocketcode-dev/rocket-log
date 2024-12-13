@@ -44,7 +44,7 @@ function build(config) {
   }
   const defaultValues = defaultTransport(type);
 
-  if (typeof config === 'string') { 
+  if (typeof config === 'string') {
     if (defaultValues) {
       config = defaultValues;
     } else {
@@ -52,7 +52,7 @@ function build(config) {
         type: 'no-default-for-type',
         message: `There is no default config of type "${config}"`
       });
-      throw errors;  
+      throw errors;
     }
   }
 
@@ -97,7 +97,7 @@ function build(config) {
         }" not valid. Acceptable values: ${VALID_TYPES}`,
     });
   }
-  
+
   if (result.type === TYPE_GROUP) {
 
     // be sure configs not intended for groups do NOT exist
@@ -205,7 +205,7 @@ function defaultTransport(type) {
       type: 'console',
       format: 'ansi-text',
       showSensitive: false,
-      levelLimit: null // set to minimum log level or null for no limit  
+      levelLimit: null // set to minimum log level or null for no limit
     }
   }
 }
@@ -260,7 +260,7 @@ function formatJson(logger, level, transport, tokens) {
  * Return `true` if there is text that would be redacted if the transport's
  * `showSensitive` property is set to `false`, and `false` if the log message
  * would never be redacted.
- * @param {Array} tokens 
+ * @param {Array} tokens
  * @returns {boolean}
  */
 function hasRedactables(tokens) {
@@ -332,6 +332,7 @@ function log(logger, level, message, ...data) {
     }
 
     // send output to destination
+    // @@ blinkers console-log ignore-line
     console.log(outputMessage);
   }
 }
@@ -482,7 +483,7 @@ function ansiTokensToCore(transport, tokens, level) {
 }
 
 function textTokensToCore(transport, tokens) {
-  
+
   let warnings = [];
   let internalErrors = [];
   let results = [];
